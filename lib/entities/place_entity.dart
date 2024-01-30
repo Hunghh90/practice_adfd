@@ -1,9 +1,8 @@
-import 'dart:ffi';
 
 class Place{
   int? id;
   String? name;
-  Double? star;
+  double? star;
   String? image;
 
   Place({this.id, this.name, this.star, this.image});
@@ -12,7 +11,7 @@ class Place{
     return Place(
       id: json["id"] as int,
       name: json["name"] as String,
-      star: json["star"] as Double,
+      star: json["star"] as double,
       image: json["image"] as String,
     );
   }

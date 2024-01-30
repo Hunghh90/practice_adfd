@@ -29,115 +29,181 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Container(color: Colors.white,
       margin: EdgeInsets.all(10),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(margin: EdgeInsets.all(10),
-            child: Row(children: [
-              Expanded(flex: 1,
-                  child: Column(children: [
-                    Container(width: double.infinity,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.pinkAccent,),
-                      child: Center(
-                        child: Image.asset("images/ico_hotel.png"),),),
-                    Text("Hotels", style: TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w300))
-                  ],)),
-              SizedBox(width: 10,),
-              Expanded(flex: 1,
-                  child: Column(children: [
-                    Container(width: double.infinity,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.pinkAccent,),
-                      child: Center(
-                        child: Image.asset("images/ico_plane.png"),),),
-                    Text("Flights", style: TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w300))
-                  ],)),
-              SizedBox(width: 10,),
-              Expanded(flex: 1,
-                  child: Column(children: [
-                    Container(width: double.infinity,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.pinkAccent,),
-                      child: Center(
-                        child: Image.asset("images/ico_hotel_plane.png"),),),
-                    Text("All", style: TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w300),)
-                  ],)),
-            ],),),
-          Text("Popular Destinations",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-          FutureBuilder<List<Place>>(
-            future: fetchData(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Text("Error loading data");
-              } else if (snapshot.hasData) {
-                List<Place> places = snapshot.data!;
-                return GridView.count(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 20,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  children: places.map((Place item) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(item.image??""),
-                          fit: BoxFit.cover,
+        height: MediaQuery.of(context).size.height,
+        child: (
+          Stack(
+            children: [
+              Container(
+                height: 200,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple,
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(70)),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(20), // Điều chỉnh khoảng cách từ lề ở đây
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Hi Guy!",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 40,
                         ),
-                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            bottom: 10,
-                            left: 10,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  item.name??"",
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(width: 4),
-                                    Text(
-                                      "${item.star}",
-                                      style: TextStyle(fontSize: 14, color: Colors.white),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                );
-              } else {
-                return Text("No data");
-              }
-            },
+                      SizedBox(height: 30,),
+                      Text(
+                        "Where are you going next?",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 170,
+                left: 40,
+                right: 40,
+                child: Container(
+                  height: 30,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search...',
+                      contentPadding: EdgeInsets.all(10),
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                  ),
+                ),
+              ),
+             Positioned(
+               top:220,
+                 left:0,
+                 right:0,
+                 child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   children: [
+                     Container(margin: EdgeInsets.all(10),
+                       width: MediaQuery.of(context).size.width,
+                       child: Row(children: [
+                         Expanded(flex: 1,
+                             child: Column(children: [
+                               Container(width: double.infinity,
+                                 height: 100,
+                                 decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(20),
+                                   color: Colors.pinkAccent,),
+                                 child: Center(
+                                   child: Image.asset("images/ico_hotel.png"),),),
+                               Text("Hotels", style: TextStyle(
+                                   fontSize: 20, fontWeight: FontWeight.w300))
+                             ],)),
+                         SizedBox(width: 10,),
+                         Expanded(flex: 1,
+                             child: Column(children: [
+                               Container(width: double.infinity,
+                                 height: 100,
+                                 decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(20),
+                                   color: Colors.pinkAccent,),
+                                 child: Center(
+                                   child: Image.asset("images/ico_plane.png"),),),
+                               Text("Flights", style: TextStyle(
+                                   fontSize: 20, fontWeight: FontWeight.w300))
+                             ],)),
+                         SizedBox(width: 10,),
+                         Expanded(flex: 1,
+                             child: Column(children: [
+                               Container(width: double.infinity,
+                                 height: 100,
+                                 decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(20),
+                                   color: Colors.pinkAccent,),
+                                 child: Center(
+                                   child: Image.asset("images/ico_hotel_plane.png"),),),
+                               Text("All", style: TextStyle(
+                                   fontSize: 20, fontWeight: FontWeight.w300),)
+                             ],)),
+                       ],),),
+                     Text("Popular Destinations",
+                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                     FutureBuilder<List<Place>>(
+                       future: fetchData(),
+                       builder: (context, snapshot) {
+                         if (snapshot.connectionState == ConnectionState.waiting) {
+                           return Center(child: CircularProgressIndicator());
+                         } else if (snapshot.hasError) {
+                           return Text("Error loading data");
+                         } else if (snapshot.hasData) {
+                           List<Place> places = snapshot.data!;
+                           return GridView.count(
+                             crossAxisCount: 2,
+                             crossAxisSpacing: 10,
+                             mainAxisSpacing: 20,
+                             shrinkWrap: true,
+                             physics: NeverScrollableScrollPhysics(),
+                             children: places.map((Place item) {
+                               return Container(
+                                 decoration: BoxDecoration(
+                                   image: DecorationImage(
+                                     image: NetworkImage(item.image??""),
+                                     fit: BoxFit.cover,
+                                   ),
+                                   borderRadius: BorderRadius.circular(10),
+                                 ),
+                                 child: Stack(
+                                   children: [
+                                     Positioned(
+                                       bottom: 10,
+                                       left: 10,
+                                       child: Column(
+                                         crossAxisAlignment: CrossAxisAlignment.start,
+                                         children: [
+                                           Text(
+                                             item.name??"",
+                                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                                           ),
+                                           Row(
+                                             children: [
+                                               Icon(
+                                                 Icons.star,
+                                                 color: Colors.white,
+                                               ),
+                                               SizedBox(width: 4),
+                                               Text(
+                                                 "${item.star}",
+                                                 style: TextStyle(fontSize: 14, color: Colors.white),
+                                               ),
+                                             ],
+                                           )
+                                         ],
+                                       ),
+                                     )
+                                   ],
+                                 ),
+                               );
+                             }).toList(),
+                           );
+                         } else {
+                           return Text("No data");
+                         }
+                       },
+                     )
+                   ],
+                 )
+             )
+            ],
           )
-        ],
+
       ),
     );
   }

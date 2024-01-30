@@ -20,27 +20,6 @@ class _MainPageState extends State<MainPage> {
       color: Colors.white,
       child: SafeArea(
           child: Scaffold(
-        appBar: AppBar(
-          title: Column(
-            children: [
-              const Text(
-                "Hi Guy!",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-              ),
-              const Text(
-                "Where are you going next?",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-              )
-            ],
-          ),
-          backgroundColor: Colors.blue.withOpacity(0.6),
-        ),
             body: IndexedStack(
               index: _curentIndex,
               children:[
