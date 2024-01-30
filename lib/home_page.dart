@@ -75,51 +75,65 @@ class _HomePageState extends State<HomePage> {
             ],),),
           Text("Popular Destinations",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-          FutureBuilder(
+          FutureBuilder<List<Place>>(
             future: fetchData(),
-            builder: (context, snapshot){
-              switch(snapshot.connectionState){
-                case ConnectionState.none:
-                  return Text("Not data");
-                case ConnectionState.waiting:
-                case ConnectionState.active:
-                  return Center(child: CircularProgressIndicator(),);
-                case ConnectionState.done:
-                  if(snapshot.hasError){
-                    return Text("Error lgetoad data");
-                  }
-                    return GridView.count(crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 20,
-                    children: [
-                    Container(decoration: BoxDecoration(image: DecorationImage(
-                    image: NetworkImage("item.imageUrl"),
-                    // Sử dụng imageUrl từ item của bạn
-                    fit: BoxFit.cover,), borderRadius: BorderRadius.circular(10),),
-                    child: Stack(children: [
-                    Positioned(bottom: 10,
-                    left: 10,
-                    child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                    Text(item.name, // Sử dụng tên từ item của bạn
-                    style: TextStyle(fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.white),),
-              Text(
-              "Tuổi: ${item.age}", // Sử dụng tuổi từ item của bạn
-              style: TextStyle(fontSize: 14,
-              color: Colors.white),),
-              ],
-              ),
-              )
-              ],
-              )
-              ),
-              ],
-              ),
-
-
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Text("Error loading data");
+              } else if (snapshot.hasData) {
+                List<Place> places = snapshot.data!;
+                return GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 20,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: places.map((Place item) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(item.image??""),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            bottom: 10,
+                            left: 10,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item.name??"",
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      "${item.star}",
+                                      style: TextStyle(fontSize: 14, color: Colors.white),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                );
+              } else {
+                return Text("No data");
               }
             },
           )
