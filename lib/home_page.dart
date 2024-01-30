@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Future<List<Place>> fetchData () async {
-    String url = "https://localhost:8081/place/get-all";
+    String url = "http://10.0.2.2:8081/place/get-all";
     try{
       final response = await http.get(Uri.parse(url));
       if(response.statusCode == 200){
@@ -145,53 +145,54 @@ class _HomePageState extends State<HomePage> {
                            return Text("Error loading data");
                          } else if (snapshot.hasData) {
                            List<Place> places = snapshot.data!;
-                           return GridView.count(
-                             crossAxisCount: 2,
-                             crossAxisSpacing: 10,
-                             mainAxisSpacing: 20,
-                             shrinkWrap: true,
-                             physics: NeverScrollableScrollPhysics(),
-                             children: places.map((Place item) {
-                               return Container(
-                                 decoration: BoxDecoration(
-                                   image: DecorationImage(
-                                     image: NetworkImage(item.image??""),
-                                     fit: BoxFit.cover,
+                           return Container(
+                             height: 200,
+                             child: GridView.count(
+                               crossAxisCount: 2,
+                               crossAxisSpacing: 10,
+                               mainAxisSpacing: 20,
+                               children: places.map((Place item) {
+                                 return Container(
+                                   decoration: BoxDecoration(
+                                     image: DecorationImage(
+                                       image: NetworkImage(item.image??""),
+                                       fit: BoxFit.cover,
+                                     ),
+                                     borderRadius: BorderRadius.circular(10),
                                    ),
-                                   borderRadius: BorderRadius.circular(10),
-                                 ),
-                                 child: Stack(
-                                   children: [
-                                     Positioned(
-                                       bottom: 10,
-                                       left: 10,
-                                       child: Column(
-                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                         children: [
-                                           Text(
-                                             item.name??"",
-                                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
-                                           ),
-                                           Row(
-                                             children: [
-                                               Icon(
-                                                 Icons.star,
-                                                 color: Colors.white,
-                                               ),
-                                               SizedBox(width: 4),
-                                               Text(
-                                                 "${item.star}",
-                                                 style: TextStyle(fontSize: 14, color: Colors.white),
-                                               ),
-                                             ],
-                                           )
-                                         ],
-                                       ),
-                                     )
-                                   ],
-                                 ),
-                               );
-                             }).toList(),
+                                   child: Stack(
+                                     children: [
+                                       Positioned(
+                                         bottom: 10,
+                                         left: 10,
+                                         child: Column(
+                                           crossAxisAlignment: CrossAxisAlignment.start,
+                                           children: [
+                                             Text(
+                                               item.name??"",
+                                               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                                             ),
+                                             Row(
+                                               children: [
+                                                 Icon(
+                                                   Icons.star,
+                                                   color: Colors.yellow,
+                                                 ),
+                                                 SizedBox(width: 4),
+                                                 Text(
+                                                   "${item.star}",
+                                                   style: TextStyle(fontSize: 14, color: Colors.white),
+                                                 ),
+                                               ],
+                                             )
+                                           ],
+                                         ),
+                                       )
+                                     ],
+                                   ),
+                                 );
+                               }).toList(),
+                             ),
                            );
                          } else {
                            return Text("No data");
