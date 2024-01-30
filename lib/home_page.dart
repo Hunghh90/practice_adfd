@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(70)),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(20), // Điều chỉnh khoảng cách từ lề ở đây
+                  padding: EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                                  height: 100,
                                  decoration: BoxDecoration(
                                    borderRadius: BorderRadius.circular(20),
-                                   color: Colors.pinkAccent,),
+                                   color: Colors.red,),
                                  child: Center(
                                    child: Image.asset("images/ico_plane.png"),),),
                                Text("Flights", style: TextStyle(
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                                  height: 100,
                                  decoration: BoxDecoration(
                                    borderRadius: BorderRadius.circular(20),
-                                   color: Colors.pinkAccent,),
+                                   color: Colors.greenAccent,),
                                  child: Center(
                                    child: Image.asset("images/ico_hotel_plane.png"),),),
                                Text("All", style: TextStyle(
